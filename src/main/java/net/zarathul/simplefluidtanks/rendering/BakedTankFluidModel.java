@@ -19,36 +19,32 @@ import net.minecraftforge.fluids.FluidRegistry;
 import java.util.EnumMap;
 import java.util.List;
 
-public class BakedTankFluidModel implements IBakedModel
-{
+public class BakedTankFluidModel implements IBakedModel {
 	private static final float offset = 0.00005f;
-    private static final float x[] = { 0, 0, 1, 1 };
-    private static final float z[] = { 0, 1, 1, 0 };
-	
-    private Fluid fluid;
-	private int level;
-	private VertexFormat format;
-	private EnumMap<EnumFacing, List<BakedQuad>> faceQuads;
-	
-	public BakedTankFluidModel(Fluid fluid, int level)
-	{
+	private static final float[] x = {0, 0, 1, 1};
+	private static final float[] z = {0, 1, 1, 0};
+
+	private final Fluid fluid;
+	private final int level;
+	private final VertexFormat format;
+	private final EnumMap<EnumFacing, List<BakedQuad>> faceQuads;
+
+	public BakedTankFluidModel(Fluid fluid, int level) {
 		this.fluid = fluid;
 		this.level = level;
-		
+
 		format = DefaultVertexFormats.ITEM;
 		faceQuads = Maps.newEnumMap(EnumFacing.class);
-		
-        for(EnumFacing side : EnumFacing.values())
-        {
-            faceQuads.put(side, ImmutableList.<BakedQuad>of());
-        }
-        
-        float[] y = new float[4];
-        
-        for(int i = 0; i < 4; i++)
-        {
-            y[i] = Math.min(level / 16f, 1f - offset);
-        }
+
+		for (EnumFacing side : EnumFacing.values()) {
+			faceQuads.put(side, ImmutableList.of());
+		}
+
+		float[] y = new float[4];
+
+		for (int i = 0; i < 4; i++) {
+			y[i] = Math.min(level / 16f, 1f - offset);
+		}
         
         TextureAtlasSprite texture = getParticleTexture();
         
@@ -65,51 +61,49 @@ public class BakedTankFluidModel implements IBakedModel
     	quadBuilder.setTexture(texture);
     	float X, Z;
         
-        for (int i = 0; i < 4; i++)
-        {
-        	X = Math.min(Math.max(x[i], offset), 1f - offset);
-        	Z = Math.min(Math.max(z[i], offset), 1f - offset);
-        	
-        	putVertex(
-                	quadBuilder, side,
-                    X, y[i] - offset, Z,
-                    texture.getInterpolatedU(x[i] * 16),
-                    texture.getInterpolatedV(z[i] * 16));
-        }
-        
-        
-        faceQuads.put(side, ImmutableList.<BakedQuad>of(quadBuilder.build()));
+        for (int i = 0; i < 4; i++) {
+			X = Math.min(Math.max(x[i], offset), 1f - offset);
+			Z = Math.min(Math.max(z[i], offset), 1f - offset);
 
-        // bottom
-        
-        side = EnumFacing.DOWN;
-        quadBuilder = new UnpackedBakedQuad.Builder(format);
-        quadBuilder.setQuadOrientation(side);
-        quadBuilder.setTexture(texture);
-        
-        for(int i = 0; i < 4; i++)
-        {
-        	X = Math.min(Math.max(x[i], offset), 1f - offset);
-        	Z = Math.min(Math.max(z[i], offset), 1f - offset);
-            
-        	putVertex(
-        			quadBuilder, side,
-        			Z, 0 + offset, X,
-        			texture.getInterpolatedU(z[i] * 16),
-        			texture.getInterpolatedV(x[i] * 16));
-        }
-        
-        faceQuads.put(side, ImmutableList.<BakedQuad>of(quadBuilder.build()));
+			putVertex(
+					quadBuilder, side,
+					X, y[i] - offset, Z,
+					texture.getInterpolatedU(x[i] * 16),
+					texture.getInterpolatedV(z[i] * 16));
+		}
 
-        /// sides
-        
-        // east
-        
-        side = EnumFacing.EAST;
 
-        quadBuilder = new UnpackedBakedQuad.Builder(format);
-        quadBuilder.setQuadOrientation(side);
-        quadBuilder.setTexture(texture);
+		faceQuads.put(side, ImmutableList.of(quadBuilder.build()));
+
+		// bottom
+
+		side = EnumFacing.DOWN;
+		quadBuilder = new UnpackedBakedQuad.Builder(format);
+		quadBuilder.setQuadOrientation(side);
+		quadBuilder.setTexture(texture);
+
+		for (int i = 0; i < 4; i++) {
+			X = Math.min(Math.max(x[i], offset), 1f - offset);
+			Z = Math.min(Math.max(z[i], offset), 1f - offset);
+
+			putVertex(
+					quadBuilder, side,
+					Z, 0 + offset, X,
+					texture.getInterpolatedU(z[i] * 16),
+					texture.getInterpolatedV(x[i] * 16));
+		}
+
+		faceQuads.put(side, ImmutableList.of(quadBuilder.build()));
+
+		/// sides
+
+		// east
+
+		side = EnumFacing.EAST;
+
+		quadBuilder = new UnpackedBakedQuad.Builder(format);
+		quadBuilder.setQuadOrientation(side);
+		quadBuilder.setTexture(texture);
         
         putVertex(
             	quadBuilder, side,
@@ -121,28 +115,28 @@ public class BakedTankFluidModel implements IBakedModel
                 x[2] - offset, 0 + offset, z[2],
                 texture.getInterpolatedU(0),
                 texture.getInterpolatedV(16));
-        putVertex(
-            	quadBuilder, side,
-                x[3] - offset, 0 + offset, z[3],
-                texture.getInterpolatedU(16),
-                texture.getInterpolatedV(16));
-        putVertex(
-            	quadBuilder, side,
-                x[3] - offset, y[3], z[3],
-                texture.getInterpolatedU(16),
-                texture.getInterpolatedV(16 - level));
-        
-        faceQuads.put(side, ImmutableList.<BakedQuad>of(quadBuilder.build()));
-        
-        // west
-        
-        side = EnumFacing.WEST;
+		putVertex(
+				quadBuilder, side,
+				x[3] - offset, 0 + offset, z[3],
+				texture.getInterpolatedU(16),
+				texture.getInterpolatedV(16));
+		putVertex(
+				quadBuilder, side,
+				x[3] - offset, y[3], z[3],
+				texture.getInterpolatedU(16),
+				texture.getInterpolatedV(16 - level));
 
-        quadBuilder = new UnpackedBakedQuad.Builder(format);
-        quadBuilder.setQuadOrientation(side);
-        quadBuilder.setTexture(texture);
-        
-        putVertex(
+		faceQuads.put(side, ImmutableList.of(quadBuilder.build()));
+
+		// west
+
+		side = EnumFacing.WEST;
+
+		quadBuilder = new UnpackedBakedQuad.Builder(format);
+		quadBuilder.setQuadOrientation(side);
+		quadBuilder.setTexture(texture);
+
+		putVertex(
             	quadBuilder, side,
                 x[0] + offset, y[0], z[0],
                 texture.getInterpolatedU(0),
@@ -152,28 +146,28 @@ public class BakedTankFluidModel implements IBakedModel
                 x[0] + offset, 0 + offset, z[0],
                 texture.getInterpolatedU(0),
                 texture.getInterpolatedV(16));
-        putVertex(
-            	quadBuilder, side,
-                x[1] + offset, 0 + offset, z[1],
-                texture.getInterpolatedU(16),
-                texture.getInterpolatedV(16));
-        putVertex(
-            	quadBuilder, side,
-                x[1] + offset, y[1], z[1],
-                texture.getInterpolatedU(16),
-                texture.getInterpolatedV(16 - level));
-        
-        faceQuads.put(side, ImmutableList.<BakedQuad>of(quadBuilder.build()));
-        
-        // south
-        
-        side = EnumFacing.SOUTH;
+		putVertex(
+				quadBuilder, side,
+				x[1] + offset, 0 + offset, z[1],
+				texture.getInterpolatedU(16),
+				texture.getInterpolatedV(16));
+		putVertex(
+				quadBuilder, side,
+				x[1] + offset, y[1], z[1],
+				texture.getInterpolatedU(16),
+				texture.getInterpolatedV(16 - level));
 
-        quadBuilder = new UnpackedBakedQuad.Builder(format);
-        quadBuilder.setQuadOrientation(side);
-        quadBuilder.setTexture(texture);
-        
-        putVertex(
+		faceQuads.put(side, ImmutableList.of(quadBuilder.build()));
+
+		// south
+
+		side = EnumFacing.SOUTH;
+
+		quadBuilder = new UnpackedBakedQuad.Builder(format);
+		quadBuilder.setQuadOrientation(side);
+		quadBuilder.setTexture(texture);
+
+		putVertex(
             	quadBuilder, side,
                 x[1], y[1], z[1] - offset,
                 texture.getInterpolatedU(0),
@@ -183,28 +177,28 @@ public class BakedTankFluidModel implements IBakedModel
                 x[1], 0 + offset, z[1] - offset,
                 texture.getInterpolatedU(0),
                 texture.getInterpolatedV(16));
-        putVertex(
-            	quadBuilder, side,
-                x[2], 0 + offset, z[2] - offset,
-                texture.getInterpolatedU(16),
-                texture.getInterpolatedV(16));
-        putVertex(
-            	quadBuilder, side,
-                x[2], y[2], z[2] - offset,
-                texture.getInterpolatedU(16),
-                texture.getInterpolatedV(16 - level));
-        
-        faceQuads.put(side, ImmutableList.<BakedQuad>of(quadBuilder.build()));
-        
-        // north
-        
-        side = EnumFacing.NORTH;
+		putVertex(
+				quadBuilder, side,
+				x[2], 0 + offset, z[2] - offset,
+				texture.getInterpolatedU(16),
+				texture.getInterpolatedV(16));
+		putVertex(
+				quadBuilder, side,
+				x[2], y[2], z[2] - offset,
+				texture.getInterpolatedU(16),
+				texture.getInterpolatedV(16 - level));
 
-        quadBuilder = new UnpackedBakedQuad.Builder(format);
-        quadBuilder.setQuadOrientation(side);
-        quadBuilder.setTexture(texture);
-        
-        putVertex(
+		faceQuads.put(side, ImmutableList.of(quadBuilder.build()));
+
+		// north
+
+		side = EnumFacing.NORTH;
+
+		quadBuilder = new UnpackedBakedQuad.Builder(format);
+		quadBuilder.setQuadOrientation(side);
+		quadBuilder.setTexture(texture);
+
+		putVertex(
             	quadBuilder, side,
                 x[3], y[3], z[3] + offset,
                 texture.getInterpolatedU(0),
@@ -214,18 +208,18 @@ public class BakedTankFluidModel implements IBakedModel
                 x[3], 0 + offset, z[3] + offset,
                 texture.getInterpolatedU(0),
                 texture.getInterpolatedV(16));
-        putVertex(
-            	quadBuilder, side,
-                x[0], 0 + offset, z[0] + offset,
-                texture.getInterpolatedU(16),
-                texture.getInterpolatedV(16));
-        putVertex(
-            	quadBuilder, side,
-                x[0], y[0], z[0] + offset,
-                texture.getInterpolatedU(16),
-                texture.getInterpolatedV(16 - level));
-        
-        faceQuads.put(side, ImmutableList.<BakedQuad>of(quadBuilder.build()));
+		putVertex(
+				quadBuilder, side,
+				x[0], 0 + offset, z[0] + offset,
+				texture.getInterpolatedU(16),
+				texture.getInterpolatedV(16));
+		putVertex(
+				quadBuilder, side,
+				x[0], y[0], z[0] + offset,
+				texture.getInterpolatedU(16),
+				texture.getInterpolatedV(16 - level));
+
+		faceQuads.put(side, ImmutableList.of(quadBuilder.build()));
 	}
 
 	@Override

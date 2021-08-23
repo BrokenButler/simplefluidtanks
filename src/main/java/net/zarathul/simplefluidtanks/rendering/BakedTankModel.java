@@ -23,7 +23,7 @@ public class BakedTankModel implements IBakedModel
 	// Fluid model cache: The HashMap key corresponds to the fluid name, the model array index to the fluid level.
 	public static final HashMap<String, IBakedModel[]> FLUID_MODELS = new HashMap<>();
 	
-	private IBakedModel baseModel;
+	private final IBakedModel baseModel;
 	
 	public BakedTankModel(IBakedModel baseModel)
 	{

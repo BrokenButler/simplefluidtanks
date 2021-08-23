@@ -4,7 +4,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 
 public class StringProperty implements IUnlistedProperty<String>
 {
-	private String name;
+	private final String name;
 	
 	public StringProperty(String name)
 	{

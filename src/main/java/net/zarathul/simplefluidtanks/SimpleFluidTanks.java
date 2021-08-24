@@ -65,7 +65,7 @@ public class SimpleFluidTanks
 	public static final String MOD_ID = "simplefluidtanks";
 	public static final String MOD_READABLE_NAME = "Simple Fluid Tanks";
 	public static final String MOD_TAB_NAME = "Simple Mods";
-	public static final String VERSION = "@VERSION@";
+	public static final String VERSION = "1.12.2-1.7.1.5";
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
@@ -91,7 +91,7 @@ public class SimpleFluidTanks
 	@SideOnly(Side.CLIENT)
 	public static final void addCreativeTab()
 	{
-		// Check if a a "Simple Mods" tab already exists, otherwise make one.
+		// Check if a "Simple Mods" tab already exists, otherwise make one.
 		SimpleFluidTanks.creativeTab = Arrays.stream(CreativeTabs.CREATIVE_TAB_ARRAY)
 			.filter(tab -> tab.getTabLabel().equals(SimpleFluidTanks.MOD_TAB_NAME))
 			.findFirst()

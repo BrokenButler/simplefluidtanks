@@ -1,24 +1,24 @@
 [
-{
+  {
     "modid": "simplefluidtanks",
     "name": "Simple Fluid Tanks",
     "description": "Adds fluid tanks of variable size and shape.",
     "version": "1.12.2-1.7.1.5",
     "mcversion": "1.12.2",
-    "url": "http://minecraft.curseforge.com/mc-mods/simplefluidtanks/",
+    "url": "https://www.curseforge.com/minecraft/mc-mods/simplefluidtanks/",
     "updateUrl": "",
     "authorList": [
-        "Zarathul"
+      "BrokenButler"
     ],
-    "credits": "Thx to Boidrix for the valve textures.",
+    "credits": "Thx to Boidrix for the valve textures and Zarathul for the original version of the mod.",
     "logoFile": "assets/simplefluidtanks/sft_logo.jpg",
     "screenshots": [],
     "parent": "",
     "requiredMods": [],
     "dependencies": [
-        "theoneprobe"
+      "theoneprobe"
     ],
     "dependants": [],
     "useDependencyInformation": "true"
-}
+  }
 ]

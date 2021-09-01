@@ -17,6 +17,7 @@ import net.zarathul.simplefluidtanks.rendering.BakedTankModel;
 
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  * Hosts Forge event handlers on the client side.
@@ -33,11 +34,10 @@ public final class ClientEventHub
 	}
 
 	@SubscribeEvent
-	public void OnModelRegistration(ModelRegistryEvent event)
-	{
-		ModelLoader.setCustomModelResourceLocation(SimpleFluidTanks.tankItem, 0, new ModelResourceLocation(SimpleFluidTanks.tankItem.getRegistryName(), "inventory"));
-		ModelLoader.setCustomModelResourceLocation(SimpleFluidTanks.valveItem, 0, new ModelResourceLocation(SimpleFluidTanks.valveItem.getRegistryName(), "inventory"));
-		ModelLoader.setCustomModelResourceLocation(SimpleFluidTanks.wrenchItem, 0, new ModelResourceLocation(SimpleFluidTanks.wrenchItem.getRegistryName(), "inventory"));
+	public void OnModelRegistration(ModelRegistryEvent event) {
+		ModelLoader.setCustomModelResourceLocation(SimpleFluidTanks.tankItem, 0, new ModelResourceLocation(Objects.requireNonNull(SimpleFluidTanks.tankItem.getRegistryName()), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(SimpleFluidTanks.valveItem, 0, new ModelResourceLocation(Objects.requireNonNull(SimpleFluidTanks.valveItem.getRegistryName()), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(SimpleFluidTanks.wrenchItem, 0, new ModelResourceLocation(Objects.requireNonNull(SimpleFluidTanks.wrenchItem.getRegistryName()), "inventory"));
 	}
 	
 	@SubscribeEvent

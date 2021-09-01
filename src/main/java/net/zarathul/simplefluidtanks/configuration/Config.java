@@ -41,23 +41,19 @@ public final class Config
 
 	/**
 	 * Gets the loaded configuration.
-	 * 
-	 * @return
-	 * The last loaded configuration or <code>null</code> if no config has been loaded yet.
+	 *
+	 * @return The last loaded configuration or <code>null</code> if no config has been loaded yet.
 	 */
-	public static final Configuration getConfig()
-	{
+	public static Configuration getConfig() {
 		return config;
 	}
 
 	/**
 	 * Loads the mods settings from the specified file.
-	 * 
-	 * @param configFile
-	 * The file to load the settings from.
+	 *
+	 * @param configFile The file to load the settings from.
 	 */
-	public static final void load(File configFile)
-	{
+	public static void load(File configFile) {
 		config = new Configuration(configFile);
 		config.load();
 		sync();

@@ -192,9 +192,8 @@ public class ValveBlock extends WrenchableBlock {
         if (valveEntity != null) {
             float fluidAmount = valveEntity.getFluidAmount();
             float capacity = valveEntity.getCapacity();
-            int signalStrength = Utils.getComparatorLevel(fluidAmount, capacity);
 
-            return signalStrength;
+            return Utils.getComparatorLevel(fluidAmount, capacity);
         }
 
         return 0;

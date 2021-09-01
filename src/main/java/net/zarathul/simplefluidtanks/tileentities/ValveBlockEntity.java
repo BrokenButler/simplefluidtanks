@@ -650,19 +650,16 @@ public class ValveBlockEntity extends TileEntity implements IFluidHandler
 			Collection<BlockPos> tanksToFill = null;
 
 			// for each priority get all the TankBlocks and fill them evenly
-			for (int i = 0; i < priorities.length; i++)
-			{
-				tanksToFill = tankPriorities.get(priorities[i]);
+			for (int priority : priorities) {
+				tanksToFill = tankPriorities.get(priority);
 
 				int capacity = tanksToFill.size() * Config.bucketsPerTank * Fluid.BUCKET_VOLUME;
 				int fillPercentage = MathHelper.clamp((int) Math.ceil((double) amountToDistribute / (double) capacity * 100d), 0, 100);
 
-				for (BlockPos tank : tanksToFill)
-				{
+				for (BlockPos tank : tanksToFill) {
 					TankBlockEntity tankEntity = Utils.getTileEntityAt(world, TankBlockEntity.class, tank);
 
-					if (tankEntity != null)
-					{
+					if (tankEntity != null) {
 						tankEntity.setFillLevel(Utils.getFluidLevel(fillPercentage), forceBlockUpdates);
 					}
 				}
@@ -953,6 +950,7 @@ public class ValveBlockEntity extends TileEntity implements IFluidHandler
 					closestTanksWithTanksBelow = (tanksWithTanksBelow.size() > 1) ?
 							getClosestTanks(tanksInSegment, tanksWithTanksBelow, currentTank) : tanksWithTanksBelow;
 
+					assert closestTanksWithTanksBelow != null;
 					for (BlockPos closestTank : closestTanksWithTanksBelow)
 					{
 						newTanks.add(closestTank.down());
@@ -1224,20 +1222,14 @@ public class ValveBlockEntity extends TileEntity implements IFluidHandler
 		
 		IBlockState state = world.getBlockState(block);
 
-		if (state.getBlock() instanceof TankBlock)
-		{
+		// this valve is also considered a unlinked tank as long as it has no associated tanks
+		if (state.getBlock() instanceof TankBlock) {
 			TankBlockEntity tankEntity = Utils.getTileEntityAt(world, TankBlockEntity.class, block);
 
-			if (tankEntity != null)
-			{
+			if (tankEntity != null) {
 				return !tankEntity.isPartOfTank();
 			}
-		}
-		else if (block.equals(pos) && tankPriorities.isEmpty())
-		{
-			// this valve is also considered a unlinked tank as long as it has no associated tanks
-			return true;
-		}
+		} else return block.equals(pos) && tankPriorities.isEmpty();
 
 		return false;
 	}

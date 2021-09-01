@@ -89,16 +89,14 @@ public class SimpleFluidTanks
 	 * Adds a creative mode tab.
 	 */
 	@SideOnly(Side.CLIENT)
-	public static final void addCreativeTab()
-	{
+	public static void addCreativeTab() {
 		// Check if a "Simple Mods" tab already exists, otherwise make one.
 		SimpleFluidTanks.creativeTab = Arrays.stream(CreativeTabs.CREATIVE_TAB_ARRAY)
-			.filter(tab -> tab.getTabLabel().equals(SimpleFluidTanks.MOD_TAB_NAME))
-			.findFirst()
-			.orElseGet(() ->
-				new CreativeTabs(SimpleFluidTanks.MOD_TAB_NAME)
-				{
-					private ItemStack iconStack;
+				.filter(tab -> tab.getTabLabel().equals(SimpleFluidTanks.MOD_TAB_NAME))
+				.findFirst()
+				.orElseGet(() ->
+						new CreativeTabs(SimpleFluidTanks.MOD_TAB_NAME) {
+							private ItemStack iconStack;
 
 					@Override
 					public String getTranslatedTabLabel()

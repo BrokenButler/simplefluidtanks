@@ -111,7 +111,7 @@ public class TankBlock extends WrenchableBlock
 				tankAboveIsEmpty = tankAbove.isEmpty();
 				ValveBlockEntity valve = tankEntity.getValve();
 				ValveBlockEntity valveAbove = tankAbove.getValve();
-				sameValve = valve != null && valveAbove != null && valve == valveAbove;
+				sameValve = valveAbove != null && valve == valveAbove;
 			}
 			
 			// Only cull the fluids top face if the tank above is not empty and both tanks 

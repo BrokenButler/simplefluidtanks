@@ -137,7 +137,7 @@ public class FluidTank implements IFluidTank, IFluidHandler, IFluidTankPropertie
 	public void setCapacity(int capacity)
 	{
 		// negative capacity makes no sense
-		this.capacity = (capacity >= 0) ? capacity : 0;
+		this.capacity = Math.max(capacity, 0);
 
 		// limit the fluid amount to the new capacity
 		if (fluid != null)

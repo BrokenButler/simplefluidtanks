@@ -25,7 +25,7 @@ public class BakedTankFluidModel implements IBakedModel {
 	private static final float[] z = {0, 1, 1, 0};
 
 	private final Fluid fluid;
-	private final int level;
+	private final int level; //WHY???? WHY IS THIS HERE???????????? WHY DOES THIS EXISTS?????
 	private final VertexFormat format;
 	private final EnumMap<EnumFacing, List<BakedQuad>> faceQuads;
 
